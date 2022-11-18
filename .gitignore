@@ -9,7 +9,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
-*.terraform.*.hcl
+*.terraform.lock.hcl
 
 
 # User-specific files
