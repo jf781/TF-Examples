@@ -11,6 +11,7 @@ data "azurerm_client_config" "current" {}
 # Resource Group 
 resource "azurerm_resource_group" "example" {
   name     = var.rg_name
+  tags     = var.tags
   location = var.region
 }
 
@@ -20,12 +21,12 @@ resource "azurerm_key_vault" "example" {
   name                        = var.key_vault_name
   location                    = azurerm_resource_group.example.location
   resource_group_name         = azurerm_resource_group.example.name
+  sku_name                    = "standard"
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-
-  sku_name = "standard"
+  tags                        = var.tags  
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
@@ -53,6 +54,7 @@ resource "azurerm_log_analytics_workspace" "example" {
   resource_group_name = azurerm_resource_group.example.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
+  tags                = var.tags  
 }
 
 resource "azurerm_eventhub_namespace" "example" {
@@ -61,10 +63,7 @@ resource "azurerm_eventhub_namespace" "example" {
   resource_group_name = azurerm_resource_group.example.name
   sku                 = "Standard"
   capacity            = 1
-
-  tags = {
-    environment = "Production"
-  }
+  tags                = var.tags  
 }
 
 resource "azurerm_eventhub_namespace_authorization_rule" "example" {

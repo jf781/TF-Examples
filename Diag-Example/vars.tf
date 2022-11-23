@@ -34,4 +34,13 @@ variable key_vault_diag_settings {
     azurePolicyEvaulationDetails  = "true"
     allMetrics                    = "false"
   }
-} 
+}
+
+variable tags {
+  type = map(string)
+  default = {
+    "tag key 1" = "tag value 1"
+    "tag key 2" = "tag value 2"
+    "tag key 3" = "tag value 3"
+  }
+}
