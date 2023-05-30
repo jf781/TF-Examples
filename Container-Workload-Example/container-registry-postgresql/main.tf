@@ -36,7 +36,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 # Create a user managed identity
-resource "azurerm_user_assigned_identity" "uami" {
+resource "azurerm_user_assigned_identity" "mi" {
   name                = var.acr-mananged-identity
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -47,7 +47,28 @@ resource "azurerm_user_assigned_identity" "uami" {
 resource "azurerm_role_assignment" "ra" {
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.uami.principal_id
+  principal_id         = azurerm_user_assigned_identity.mi.principal_id
+}
+
+# Define a private endpoint
+resource "azurerm_private_endpoint" "acr-pe" {
+  name                = join("-", [var.container_registry.name, "pe"])
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  subnet_id           = data.azurerm_subnet.acr-subnet[0].id
+  tags                = var.tags
+
+  private_service_connection {
+    name                           = var.container_registry.name
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_container_registry.acr.id
+    subresource_names              = ["registry"]
+  }
+
+  private_dns_zone_group {
+    name                           = var.container_registry.private_dns_zone_name
+    private_dns_zone_ids           = [data.azurerm_private_dns_zone.acr-dns-zone.id]
+  }
 }
 
 

@@ -23,6 +23,8 @@ variable "container_registry" {
     vnet_name                     = string
     vnet_rg_name                  = string
     subnet_name                   = string
+    private_dns_zone_name         = string
+    private_dns_zone_rg_name      = string
     georeplication = list(object({
       name            = string
       zone_redundancy = bool

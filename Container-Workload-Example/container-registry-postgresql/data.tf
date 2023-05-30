@@ -21,6 +21,12 @@ data "azurerm_subnet" "acr-subnet" {
   resource_group_name  = var.container_registry.vnet_rg_name
 }
 
+# Pulls information about the private DNS zone to associate the Azure Container Registry
+data "azurerm_private_dns_zone" "acr-dns-zone" {
+  name                = var.container_registry.private_dns_zone_name
+  resource_group_name = var.container_registry.private_dns_zone_rg_name
+}
+
 # Pulls information about the private DNS zone to associate the PostgreSQL Flexible Server
 data "azurerm_private_dns_zone" "pg-dns-zone" {
   name                = var.postgresql_server.private_dns_zone_name

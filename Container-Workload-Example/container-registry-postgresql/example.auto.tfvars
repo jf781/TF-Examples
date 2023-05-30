@@ -11,7 +11,7 @@ tags = {
   costcenter   = "it"
 }
 
-acr-mananged-identity = "mi-acr"
+acr-mananged-identity = "mi-acr-example"
 
 container_registry = {
   name                          = "pgexampleacr"
@@ -22,6 +22,8 @@ container_registry = {
   vnet_name                     = "my-vnet"
   vnet_rg_name                  = "vnet-resource-group"
   subnet_name                   = "acr-subnet"
+  private_dns_zone_name         = "privatelink.azurecr.io"
+  private_dns_zone_rg_name      = "vnet-resource-group"
 }
 
 postgresql_server = {
