@@ -38,7 +38,7 @@ postgresql_server = {
   delegated_subnet_name          = "pg-subnet"
   delegated_vnet_name            = "my-vnet"
   delegated_vnet_rg_name         = "vnet-resource-group"
-  private_dns_zone_name          = "pg.postgres.database.azure.com"
+  private_dns_zone_name          = "privatelink.postgres.database.azure.com"
   private_dns_zone_rg_name       = "vnet-resource-group"
 
   authentication = {
