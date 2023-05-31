@@ -5,14 +5,19 @@ resource "azurerm_container_group" "aci" {
   location            = data.azurerm_resource_group.rg.location
   ip_address_type     = var.container_group.ip_address_type
   # dns_name_label      = var.container_group.dns_name_label
-  os_type    = var.container_group.os_type
-  subnet_ids = [data.azurerm_subnet.subnet.id]
-  tags       = var.tags
+  os_type = var.container_group.os_type
+  tags    = var.tags
+  subnet_ids = [
+    data.azurerm_subnet.subnet.id
+  ]
 
-  # identity {
-  #   type = var.container_group.identity_type
-  #   identity_ids = [data.azurerm_user_assigned_identity.mi.id]
-  # }
+
+  identity {
+    type = var.container_group.identity_type
+    identity_ids = [
+      data.azurerm_user_assigned_identity.mi.id
+    ]
+  }
 
   dynamic "container" {
     for_each = var.container_group.containers
@@ -38,3 +43,13 @@ resource "azurerm_container_group" "aci" {
     }
   }
 }
+
+
+## Example for creating a DNS record for the container group
+# resource "azurerm_dns_a_record" "aci" {
+#   name                = var.container_group.dns_record_name
+#   zone_name           = var.container_group.dns_zone_name
+#   resource_group_name = var.container_group.dns_zone_rg_name
+#   ttl                 = var.container_group.dns_ttl
+#   records             = [azurerm_container_group.aci.ip_address]
+# }

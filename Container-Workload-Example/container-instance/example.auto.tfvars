@@ -7,15 +7,19 @@ tags = {
 }
 
 container_group = {
-  name            = "my-container-group"
-  ip_address_type = "Private"
-  dns_name_label  = "my-container-group-dns"
-  os_type         = "Linux"
-  identity_name   = "mi-acr"
-  identity_type   = "UserAssigned"
-  subnet_name     = "aci-subnet"
-  vnet_name       = "my-vnet"
-  vnet_rg_name    = "vnet-resource-group"
+  name             = "my-container-group"
+  ip_address_type  = "Private"
+  dns_name_label   = "my-container-group-dns"
+  os_type          = "Linux"
+  identity_name    = "mi-acr-example"
+  identity_type    = "UserAssigned"
+  subnet_name      = "aci-subnet"
+  vnet_name        = "my-vnet"
+  vnet_rg_name     = "vnet-resource-group"
+  dns_record_name  = "container-dns-name"
+  dns_ttl          = 300
+  dns_zone_name    = "container-dns-zone"
+  dns_zone_rg_name = "container-dns-zone-rg"
 
   containers = [
     {
@@ -33,18 +37,18 @@ container_group = {
       }
       port     = 80
       protocol = "TCP"
-      },
-      {
-        name   = "container-2"
-        image  = "mysql:latest"
-        cpu    = 2
-        memory = "1"
-        environment_variables = {
-          MYSQL_ROOT_PASSWORD = "my_password"
-        }
-        secure_environment_variables = {}
-        port                         = 3306
-        protocol                     = "TCP"
+    },
+    {
+      name   = "container-2"
+      image  = "mysql:latest"
+      cpu    = 2
+      memory = "1"
+      environment_variables = {
+        MYSQL_ROOT_PASSWORD = "my_password"
+      }
+      secure_environment_variables = {}
+      port                         = 3306
+      protocol                     = "TCP"
     }
   ]
 }

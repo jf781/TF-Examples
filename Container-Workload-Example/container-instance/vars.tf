@@ -11,15 +11,19 @@ variable "resourse_group_name" {
 variable "container_group" {
   description = "Azure Container Group configuration"
   type = object({
-    name            = string
-    ip_address_type = string
-    dns_name_label  = string
-    os_type         = string
-    identity_type   = string
-    identity_name   = string
-    subnet_name     = string
-    vnet_name       = string
-    vnet_rg_name    = string
+    name             = string
+    ip_address_type  = string
+    dns_name_label   = string
+    os_type          = string
+    identity_type    = string
+    identity_name    = string
+    subnet_name      = string
+    vnet_name        = string
+    vnet_rg_name     = string
+    dns_record_name  = string
+    dns_ttl          = number
+    dns_zone_name    = string
+    dns_zone_rg_name = string
 
     containers = list(object({
       name                         = string
