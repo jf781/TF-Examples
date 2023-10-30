@@ -28,6 +28,5 @@ managed_disks = [
     storage_account_type = "Premium_LRS"
     create_option        = "Empty"
     disk_size_gb         = 512
-    max_shares           = 2
   }
 ]
