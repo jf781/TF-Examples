@@ -66,8 +66,8 @@ resource "azurerm_private_endpoint" "acr-pe" {
   }
 
   private_dns_zone_group {
-    name                           = var.container_registry.private_dns_zone_name
-    private_dns_zone_ids           = [data.azurerm_private_dns_zone.acr-dns-zone.id]
+    name                 = var.container_registry.private_dns_zone_name
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.acr-dns-zone.id]
   }
 }
 

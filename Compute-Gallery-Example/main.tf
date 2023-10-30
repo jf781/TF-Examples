@@ -26,7 +26,7 @@ resource "azurerm_shared_image_gallery" "gallery" {
   resource_group_name = azurerm_resource_group.rg.name
   tags                = var.tags
 
-  description         = var.image_gallery.description
+  description = var.image_gallery.description
 }
 
 # Defines the actual image from the VM
@@ -40,21 +40,21 @@ resource "azurerm_image" "image" {
 
 # Define Shared Image
 resource "azurerm_shared_image" "shared_image" {
-  name                          = var.shared_image.name
-  resource_group_name           = azurerm_resource_group.rg.name
-  location                      = azurerm_resource_group.rg.location
-  tags                          = var.tags
+  name                = var.shared_image.name
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags                = var.tags
 
-  gallery_name                  = azurerm_shared_image_gallery.gallery.name
-  os_type                       = var.shared_image.os_type 
-  description                   = var.shared_image.description
-  architecture                  = var.shared_image.architecture
-  hyper_v_generation            = var.shared_image.hyper_v_generation
+  gallery_name       = azurerm_shared_image_gallery.gallery.name
+  os_type            = var.shared_image.os_type
+  description        = var.shared_image.description
+  architecture       = var.shared_image.architecture
+  hyper_v_generation = var.shared_image.hyper_v_generation
 
-  min_recommended_vcpu_count    = var.shared_image.min_recommended_vcpu_count
-  max_recommended_vcpu_count    = var.shared_image.max_recommended_vcpu_count
-  min_recommended_memory_in_gb  = var.shared_image.min_recommended_memory_in_gb
-  max_recommended_memory_in_gb  = var.shared_image.max_recommended_memory_in_gb
+  min_recommended_vcpu_count   = var.shared_image.min_recommended_vcpu_count
+  max_recommended_vcpu_count   = var.shared_image.max_recommended_vcpu_count
+  min_recommended_memory_in_gb = var.shared_image.min_recommended_memory_in_gb
+  max_recommended_memory_in_gb = var.shared_image.max_recommended_memory_in_gb
 
   identifier {
     publisher = var.shared_image.publisher
@@ -72,9 +72,9 @@ resource "azurerm_shared_image_version" "image_version" {
   image_name          = azurerm_shared_image.shared_image.name
   tags                = var.tags
 
-  managed_image_id    = azurerm_image.image.id
+  managed_image_id = azurerm_image.image.id
 
-  dynamic target_region {
+  dynamic "target_region" {
     for_each = var.image_version.target_region
     content {
       name                   = target_region.value.name

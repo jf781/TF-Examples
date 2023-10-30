@@ -26,7 +26,7 @@ resource "azurerm_key_vault" "example" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-  tags                        = var.tags  
+  tags                        = var.tags
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
@@ -54,7 +54,7 @@ resource "azurerm_log_analytics_workspace" "example" {
   resource_group_name = azurerm_resource_group.example.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
-  tags                = var.tags  
+  tags                = var.tags
 }
 
 resource "azurerm_eventhub_namespace" "example" {
@@ -63,7 +63,7 @@ resource "azurerm_eventhub_namespace" "example" {
   resource_group_name = azurerm_resource_group.example.name
   sku                 = "Standard"
   capacity            = 1
-  tags                = var.tags  
+  tags                = var.tags
 }
 
 resource "azurerm_eventhub_namespace_authorization_rule" "example" {
@@ -87,12 +87,12 @@ resource "azurerm_eventhub" "example" {
 
 # Configure Diagnostic Settings
 resource "azurerm_monitor_diagnostic_setting" "example" {
-  name                            = var.key_vault_diag_settings.name
-  target_resource_id              = azurerm_key_vault.example.id
+  name               = var.key_vault_diag_settings.name
+  target_resource_id = azurerm_key_vault.example.id
 
-  log_analytics_workspace_id      = azurerm_log_analytics_workspace.example.id
-  eventhub_name                   = var.eh_name
-  eventhub_authorization_rule_id  = azurerm_eventhub_namespace_authorization_rule.example.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.example.id
+  eventhub_name                  = var.eh_name
+  eventhub_authorization_rule_id = azurerm_eventhub_namespace_authorization_rule.example.id
 
 
   log {
@@ -115,8 +115,8 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
 
 
   metric {
-    category  = "AllMetrics"
-    enabled   = var.key_vault_diag_settings.allMetrics
+    category = "AllMetrics"
+    enabled  = var.key_vault_diag_settings.allMetrics
 
     retention_policy {
       enabled = false
